@@ -8,7 +8,7 @@ import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 
 public class JsonExtractorUtil {
-    public static String extract(String input) throws IOException {
+    public static String extractJson(String input) throws IOException {
         var stringBuilder = new StringBuilder();
         var compressed = Base64.getDecoder().decode(input);
         var gis = new GZIPInputStream(new ByteArrayInputStream(compressed));
