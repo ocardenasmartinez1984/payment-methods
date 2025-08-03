@@ -1,5 +1,6 @@
-package cl.billy;
+package cl.billy.utils;
 
+import cl.billy.entities.InvoicesWrapper;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -8,9 +9,9 @@ import jakarta.xml.bind.PropertyException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class InvoiceXmlWriter {
+public class InvoiceXmlWriterUtil {
 
-    public void createXml(InvoicesWrapper wrapper) {
+    public static void createXml(InvoicesWrapper wrapper) {
         var outputDir = new File("../output");
         if (!outputDir.exists()) outputDir.mkdirs();
         var outputFile = new File(outputDir, "dte.xml");

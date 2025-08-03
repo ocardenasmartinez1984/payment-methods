@@ -1,4 +1,4 @@
-package cl.billy;
+package cl.billy.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package cl.billy;
+package cl.billy.utils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -6,9 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-public class Reporter {
+public class ReporterUtil {
 
-    public void createReport(Map<String, Long> groupPaymentMethods, Map<String, Double> totalPaymentMethodsIn, double totalSum) throws IOException {
+    public static void createReport(Map<String, Long> groupPaymentMethods, Map<String, Double> totalPaymentMethodsIn, double totalSum) throws IOException {
         var paymethods = new StringBuilder();
         var totalDocuments = new StringBuilder();
         var totalPaymentMethods = new StringBuilder();

@@ -1,4 +1,4 @@
-package cl.billy;
+package cl.billy.entities;
 
 import java.util.List;
 
