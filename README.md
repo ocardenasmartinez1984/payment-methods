@@ -29,4 +29,9 @@ Ejecutar el proyecto:
 java -jar payment-methods.jar ../entrega.json
 ```
 
-Las salidas son dos archivos en la carpeta output en la raiz del proyecto, dte.xml contiene todos los documentos en detalle y reporte.html contiene un resumen de los documentos.
+## 📤 Salidas generadas
+
+Las salidas se generan en la carpeta output ubicada en la raíz del proyecto. Se crean dos archivos:
+
+- dte.xml: contiene todos los documentos en detalle en formato XML.
+- reporte.html: contiene un resumen de los documentos procesados en formato HTML.
