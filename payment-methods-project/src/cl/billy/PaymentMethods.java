@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 public class PaymentMethods {
     public static void main(String[] args) {
         System.out.println("Tiempo de inicio: " + LocalDateTime.now());
-        if(args[0] == null || args[0].trim().isEmpty()) {
+        var inputFile = "";
+        try {
+            inputFile = args[0];
+        }catch (IndexOutOfBoundsException e) {
             System.out.println("No se definio archivo de entrada, pruebe de esta forma: ");
             System.out.println("java -jar payment-methods.jar: ../entrega.json");
             return;
         }
-        var inputFile = args[0];
         try {
             var outJson = new FileReaderUtil().readFile(inputFile);
             var wrapper = new ObjectMapper().readValue(outJson, DocumentWrapper.class);
