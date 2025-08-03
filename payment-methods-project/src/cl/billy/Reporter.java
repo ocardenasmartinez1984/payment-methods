@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Reporter {
 
-    public void createReport(Map<String, Long> groupPaymentMethods, Map<String, Double> totalPaymentMethodsIn, double sumaTotal) throws IOException {
+    public void createReport(Map<String, Long> groupPaymentMethods, Map<String, Double> totalPaymentMethodsIn, double totalSum) throws IOException {
         var paymethods = new StringBuilder();
         var totalDocuments = new StringBuilder();
         var totalPaymentMethods = new StringBuilder();
@@ -85,7 +85,7 @@ public class Reporter {
                 "      <tr>\n" +
                 "        <td>Total a Pagar</td>\n" +
                 totalPaymentMethods +
-                "        <td>" + sumaTotal + "</td>\n" +
+                "        <td>" + totalSum + "</td>\n" +
                 "      </tr>\n" +
                 "    </tbody>\n" +
                 "  </table>\n" +

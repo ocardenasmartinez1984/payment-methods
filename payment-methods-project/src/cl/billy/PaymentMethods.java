@@ -38,10 +38,10 @@ public class PaymentMethods {
                             Invoice::getMedioPago,
                             Collectors.summingDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
                     ));
-            var sumaTotal = invoicesWrapper.getInvoices().stream()
+            var totalSum = invoicesWrapper.getInvoices().stream()
                     .mapToDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
                     .sum();
-            new Reporter().createReport(groupPaymentMethods, totalPaymentMethods, sumaTotal);
+            new Reporter().createReport(groupPaymentMethods, totalPaymentMethods, totalSum);
         } catch (IOException e) {
             System.out.println("Error ejecutando el proceso: ");
             e.printStackTrace();
