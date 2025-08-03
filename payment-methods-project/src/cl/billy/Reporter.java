@@ -31,7 +31,7 @@ public class Reporter {
                 "<html lang=\"es\">\n" +
                 "<head>\n" +
                 "  <meta charset=\"UTF-8\">\n" +
-                "  <title>Tabla Estilizada</title>\n" +
+                "  <title>Reporte documentos</title>\n" +
                 "  <style>\n" +
                 "    body {\n" +
                 "      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n" +
@@ -67,7 +67,7 @@ public class Reporter {
                 "  </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "  <h2>Reporte</h2>\n" +
+                "  <h2>Reporte Documentos</h2>\n" +
                 "  <table>\n" +
                 "    <thead>\n" +
                 "      <tr>\n" +
