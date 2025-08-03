@@ -1,9 +1,6 @@
 package cl.billy;
 
-import cl.billy.entities.Document;
-import cl.billy.entities.DocumentWrapper;
-import cl.billy.entities.Invoice;
-import cl.billy.entities.InvoicesWrapper;
+import cl.billy.entities.*;
 import cl.billy.utils.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,16 +20,11 @@ public class PaymentMethods {
             return;
         }
         try {
-            var outJson = FileReaderUtil.readFile(inputFile);
-            var wrapper = new ObjectMapper().readValue(outJson, DocumentWrapper.class);
-            var documents = wrapper.getDocuments();
+            var documents = new ObjectMapper().readValue(FileReaderUtil.readFile(inputFile), DocumentWrapper.class).getDocuments();
             var invoicesWrapper = new InvoicesWrapper();
             var listInvoices = new ArrayList<Invoice>();
-            for (Document doc : documents) {
-                var decompressed = JsonExtractorUtil.extract(doc.getContentBase64());
-                var invoice = ReadJsonFromStringUtil.read(decompressed);
-                listInvoices.add(invoice);
-            }
+            for (Document docs : documents)
+                listInvoices.add(ReadJsonFromStringUtil.read(JsonExtractorUtil.extract(docs.getContentBase64())));
             invoicesWrapper.setInvoices(listInvoices);
             InvoiceXmlWriterUtil.createXml(invoicesWrapper);
             ReporterUtil.createReport(invoicesWrapper);
