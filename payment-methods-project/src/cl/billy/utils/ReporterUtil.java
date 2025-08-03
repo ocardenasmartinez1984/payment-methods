@@ -1,31 +1,45 @@
 package cl.billy.utils;
 
+import cl.billy.entities.Invoice;
+import cl.billy.entities.InvoicesWrapper;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReporterUtil {
 
-    public static void createReport(Map<String, Long> groupPaymentMethods, Map<String, Double> totalPaymentMethodsIn, double totalSum) throws IOException {
-        var paymethods = new StringBuilder();
-        var totalDocuments = new StringBuilder();
-        var totalPaymentMethods = new StringBuilder();
+    public static void createReport(InvoicesWrapper invoicesWrapper) throws IOException {
+        var paymentMethodBuilder = new StringBuilder();
+        var totalDocumentsBuilder = new StringBuilder();
+        var totalPaymentMethodsBuilder = new StringBuilder();
         var sumDocument = 0L;
+        var groupPaymentMethods = invoicesWrapper.getInvoices().stream()
+                .collect(Collectors.groupingBy(Invoice::getMedioPago, Collectors.counting()));
+        var totalPaymentMethods = invoicesWrapper.getInvoices().stream()
+                .collect(Collectors.groupingBy(
+                        Invoice::getMedioPago,
+                        Collectors.summingDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
+                ));
+        var totalSum = invoicesWrapper.getInvoices().stream()
+                .mapToDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
+                .sum();
         for (Map.Entry<String, Long> entry : groupPaymentMethods.entrySet()) {
-            paymethods.append("<th>");
-            paymethods.append(entry.getKey());
-            paymethods.append("</th>");
-            totalDocuments.append("<td>");
-            totalDocuments.append(entry.getValue());
-            totalDocuments.append("</td>");
+            paymentMethodBuilder.append("<th>");
+            paymentMethodBuilder.append(entry.getKey());
+            paymentMethodBuilder.append("</th>");
+            totalDocumentsBuilder.append("<td>");
+            totalDocumentsBuilder.append(entry.getValue());
+            totalDocumentsBuilder.append("</td>");
             sumDocument += entry.getValue();
         }
-        for (Map.Entry<String, Double> entry : totalPaymentMethodsIn.entrySet()) {
-            totalPaymentMethods.append("<td>");
-            totalPaymentMethods.append(entry.getValue());
-            totalPaymentMethods.append("</td>");
+        for (Map.Entry<String, Double> entry : totalPaymentMethods.entrySet()) {
+            totalPaymentMethodsBuilder.append("<td>");
+            totalPaymentMethodsBuilder.append(entry.getValue());
+            totalPaymentMethodsBuilder.append("</td>");
         }
         var report = "<!DOCTYPE html>\n" +
                 "<html lang=\"es\">\n" +
@@ -72,19 +86,19 @@ public class ReporterUtil {
                 "    <thead>\n" +
                 "      <tr>\n" +
                 "        <th>&nbsp;</th>\n" +
-                paymethods +
+                paymentMethodBuilder +
                 "        <th>Totales</th>\n" +
                 "      </tr>\n" +
                 "    </thead>\n" +
                 "    <tbody>\n" +
                 "      <tr>\n" +
                 "        <td>Cantidad Docs</td>\n" +
-                totalDocuments +
+                totalDocumentsBuilder +
                 "        <td>" + sumDocument + "</td>\n" +
                 "      </tr>\n" +
                 "      <tr>\n" +
                 "        <td>Total a Pagar</td>\n" +
-                totalPaymentMethods +
+                totalPaymentMethodsBuilder +
                 "        <td>" + totalSum + "</td>\n" +
                 "      </tr>\n" +
                 "    </tbody>\n" +
@@ -92,7 +106,7 @@ public class ReporterUtil {
                 "</body>\n" +
                 "</html>\n";
         var path = Paths.get("../output/reporte.html");
-        Files.write(path, report.getBytes(StandardCharsets.UTF_8));
+        Files.writeString(path, report);
         System.out.println("Reporte generado en: " + path);
     }
 

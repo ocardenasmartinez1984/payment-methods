@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class PaymentMethods {
     public static void main(String[] args) {
@@ -36,17 +35,7 @@ public class PaymentMethods {
             }
             invoicesWrapper.setInvoices(listInvoices);
             InvoiceXmlWriterUtil.createXml(invoicesWrapper);
-            var groupPaymentMethods = invoicesWrapper.getInvoices().stream()
-                    .collect(Collectors.groupingBy(Invoice::getMedioPago, Collectors.counting()));
-            var totalPaymentMethods = invoicesWrapper.getInvoices().stream()
-                    .collect(Collectors.groupingBy(
-                            Invoice::getMedioPago,
-                            Collectors.summingDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
-                    ));
-            var totalSum = invoicesWrapper.getInvoices().stream()
-                    .mapToDouble(inv -> Double.parseDouble(inv.getTotalAPagar()))
-                    .sum();
-            ReporterUtil.createReport(groupPaymentMethods, totalPaymentMethods, totalSum);
+            ReporterUtil.createReport(invoicesWrapper);
         } catch (IOException e) {
             System.out.println("Error ejecutando el proceso: ");
             e.printStackTrace();
