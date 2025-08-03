@@ -1,0 +1,10 @@
+src/cl/billy/InvoicesWrapper.java
+src/cl/billy/JsonExtractor.java
+src/cl/billy/Invoice.java
+src/cl/billy/Document.java
+src/cl/billy/FileReaderUtil.java
+src/cl/billy/InvoiceXmlWriter.java
+src/cl/billy/Reporter.java
+src/cl/billy/DocumentWrapper.java
+src/cl/billy/PaymentMethods.java
+src/cl/billy/ReadJsonFromString.java

@@ -10,8 +10,14 @@ import java.util.stream.Collectors;
 public class PaymentMethods {
     public static void main(String[] args) {
         System.out.println("Tiempo de inicio: " + LocalDateTime.now());
+        if(args[0] == null || args[0].trim().isEmpty()) {
+            System.out.println("No se definio archivo de entrada, pruebe de esta forma: ");
+            System.out.println("java -jar payment-methods.jar: ../entrega.json");
+            return;
+        }
+        var inputFile = args[0];
         try {
-            var outJson = new FileReaderUtil().readFile("../entrega.json");
+            var outJson = new FileReaderUtil().readFile(inputFile);
             var wrapper = new ObjectMapper().readValue(outJson, DocumentWrapper.class);
             var documents = wrapper.getDocuments();
             var invoicesWrapper = new InvoicesWrapper();
